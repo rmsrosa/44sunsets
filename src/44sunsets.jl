@@ -22,9 +22,10 @@ function intro_text_object(pt_text, width_text)
         [
             "Here is the story",
             "of this little fella",
-            "called Little Prince",
+            "known as the Little Prince",
             "and the day he saw",
-            "44 sunsets",
+            "44 sunsets,",
+            "on a single day,",
             "walking around",
             "his little planet.",
         ],
@@ -74,20 +75,26 @@ function make_scene()
 
     vid = Video(width, height)
 
+    fadein = 20
+    fadeout = 10
+
+    title_n0, title_n1, title_nf = 1, 100, 100
+    intro_n0, intro_n1, intro_nf = 81, 300, 220
+
     Background(1:nframes, ground)
 
-    title = Object(1:div(nframes, 2), (args...) -> title_object(ptitle))
+    title = Object(title_n0:title_n1, (args...) -> title_object(ptitle))
     act!(
         title,
         [
-            Action(1:20, appear(:fade)),
-            Action(div(nframes, 2)-10:div(nframes, 2), disappear(:fade)),
+            Action(title_n0:title_n0+fadein, appear(:fade)),
+            Action(title_nf-fadeout:title_nf, disappear(:fade)),
         ],
     )
 
     intro_text =
-        Object(40:200, (args...) -> intro_text_object(pt_intro_text, width_intro_text))
-    act!(intro_text, [Action(1:20, appear(:fade)), Action(150:161, disappear(:fade))])
+        Object(intro_n0:intro_n1, (args...) -> intro_text_object(pt_intro_text, width_intro_text))
+    act!(intro_text, [Action(1:fadein, appear(:fade)), Action(intro_nf-fadeout:intro_nf, disappear(:fade))])
 
     sun = Object(1:nframes, (args...; θ) -> sun_object(origin, 20, 220, θ))
     act!(sun, Action(1:nframes, change(:θ, 0 => 2π)))
@@ -95,7 +102,7 @@ function make_scene()
     planet = Object(1:nframes, (args...; θ) -> planet_object(origin, 80, θ))
     act!(planet, Action(1:nframes, change(:θ, 0 => 2π)))
 
-    render(vid; pathname = joinpath("images", "44sunsets.gif"))
+    render(vid; pathname = joinpath("..", "images", "44sunsets.gif"))
 end
 
 make_scene()

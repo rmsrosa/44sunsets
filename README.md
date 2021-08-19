@@ -8,4 +8,4 @@ This is an ongoing project by [Caio César](https://github.com/usingcaio), Fred 
 
 Here is the current, preliminary, version of the animation:
 
-![44sunsets animation](src/images/44sunsets.gif)
+![44sunsets animation](images/44sunsets.gif)
