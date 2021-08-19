@@ -15,9 +15,9 @@ end
 
 function intro_text_object(pt_text, width_text)
     fontsize(20)
-#=     textwrap("Here comes some introductory story about Little Prince"
-        * "and his little planet, and blah, blah, blah", width_text,
-        pt_text) =#
+    #=     textwrap("Here comes some introductory story about Little Prince"
+            * "and his little planet, and blah, blah, blah", width_text,
+            pt_text) =#
     textbox(
         [
             "Here is the story",
@@ -70,7 +70,7 @@ function make_scene()
     origin = Point(div(height, 2) - div(width, 2), 0)
     ptitle = origin - Point(0, 0.9 * div(height, 2))
 
-    pt_intro_text = origin + Point(div(height, 2), - div(height, 5))
+    pt_intro_text = origin + Point(div(height, 2), -div(height, 5))
     width_intro_text = div(height, 2)
 
     vid = Video(width, height)
@@ -92,9 +92,17 @@ function make_scene()
         ],
     )
 
-    intro_text =
-        Object(intro_n0:intro_n1, (args...) -> intro_text_object(pt_intro_text, width_intro_text))
-    act!(intro_text, [Action(1:fadein, appear(:fade)), Action(intro_nf-fadeout:intro_nf, disappear(:fade))])
+    intro_text = Object(
+        intro_n0:intro_n1,
+        (args...) -> intro_text_object(pt_intro_text, width_intro_text),
+    )
+    act!(
+        intro_text,
+        [
+            Action(1:fadein, appear(:fade)),
+            Action(intro_nf-fadeout:intro_nf, disappear(:fade)),
+        ],
+    )
 
     sun = Object(1:nframes, (args...; θ) -> sun_object(origin, 20, 220, θ))
     act!(sun, Action(1:nframes, change(:θ, 0 => 2π)))
