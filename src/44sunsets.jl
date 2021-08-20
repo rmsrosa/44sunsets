@@ -78,8 +78,9 @@ function make_scene()
     fadein = 20
     fadeout = 10
 
-    title_n0, title_n1, title_nf = 1, 100, 100
-    intro_n0, intro_n1, intro_nf = 81, 300, 220
+    # initial frame, last frame and number of frames
+    title_n0, title_n1 = 11, 100; title_nf = title_n1 - title_n0 + 1
+    intro_n0, intro_n1 = 121, 300; intro_nf = intro_n1 - intro_n0 + 1
 
     Background(1:nframes, ground)
 
@@ -87,7 +88,7 @@ function make_scene()
     act!(
         title,
         [
-            Action(title_n0:title_n0+fadein, appear(:fade)),
+            Action(1:fadein, appear(:fade)),
             Action(title_nf-fadeout:title_nf, disappear(:fade)),
         ],
     )
@@ -110,7 +111,7 @@ function make_scene()
     planet = Object(1:nframes, (args...; θ) -> planet_object(origin, 80, θ))
     act!(planet, Action(1:nframes, change(:θ, 0 => 2π)))
 
-    render(vid; pathname = joinpath("..", "images", "44sunsets.gif"))
+    render(vid; pathname = joinpath("..", "images", "44sunsets.gif"), framerate = 15)
 end
 
 make_scene()
